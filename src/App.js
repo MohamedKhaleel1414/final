@@ -18,33 +18,39 @@ import Footer from "./components/footer/Footer";
 import SearchedItems from "./components/searchedItems/SearchedItems";
 import RequireAuth from "./components/loginAuths/RequireAuth";
 import ConfirmPage from "./pages/ConfirmPage";
+import SeeOffers from "./pages/seeOffers/SeeOffers"
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Routes>
+      <PayPalScriptProvider options={{"client-id":"AUmhsxLzCXuQsabEuOPcmN32WTzkgReWGzyqI3ul2J2fpN9w8QhguYbUoo245cL3WJx5i-7tDJgJ8jsi"}}>
+        <Navbar />
+        <Routes>
 
-        <Route index element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/category/:catid" element={<Category />} />
-        <Route path="/searchedItems" element={<SearchedItems />}/>
-        <Route path="/product" element={<MyProduct />} />
-        
-        <Route element={<RequireAuth/>}>
-          <Route path="/postAd/:uid" element={<PostAd />} />
-          <Route path="/exchangeProducts" element={<ExchangeProducts />} />
-          <Route path="/myInfo/:uid" element={ <MyInfo />}/>
-          <Route path="/myAds/:uid" element={  <MyAds /> }/>
-          <Route path="/myWishlist/:uid" element={  <MyWishlist /> }/>
-          <Route path="/cart/:uid" element={<MyCart />}/>
-          <Route path="/confirm/:uid" element={<ConfirmPage />}/>
-        </Route>
-        
-        <Route path="*" element={<Notfound />} />
-        
-      </Routes>
-      <Footer />
+          <Route index element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/category/:catid" element={<Category />} />
+          <Route path="/searchedItems" element={<SearchedItems />} />
+          <Route path="/product" element={<MyProduct />} />
+
+          <Route element={<RequireAuth />}>
+            <Route path="/postAd/:uid" element={<PostAd />} />
+            <Route path="/exchangeProducts" element={<ExchangeProducts />} />
+            <Route path="/myInfo/:uid" element={<MyInfo />} />
+            <Route path="/myAds/:uid" element={<MyAds />} />
+            <Route path="/myWishlist/:uid" element={<MyWishlist />} />
+            <Route path="/cart/:uid" element={<MyCart />} />
+            <Route path="/confirm/:uid" element={<ConfirmPage />} />
+            <Route path="/seeoffers" element={<SeeOffers />} />
+          </Route>
+
+          <Route path="*" element={<Notfound />} />
+
+        </Routes>
+        <Footer />
+      </PayPalScriptProvider>
     </>
   );
 }

@@ -7,23 +7,28 @@ import { useEffect } from "react";
 // import { InfinitySpin } from "react-loader-spinner";
 import { Container, ProgressBar } from "react-bootstrap";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import swal from "sweetalert";
 
 function PostAd(props) {
+  const nav = useNavigate();
+  const userId = JSON.parse(localStorage.getItem("authorization"))
+  
   const colors = [
     "red",
     "pink",
     "purple",
     "blue",
-    "teal",
+    // "teal",
     "green",
-    "lime",
+    // "lime",
     "yellow",
     "orange",
     "brown",
     "gray",
     "black",
     "white",
-    "indigo",
+    // "indigo",
   ];
 
   const durationsOfUse = [
@@ -57,7 +62,7 @@ function PostAd(props) {
       color: "",
     },
   });
-
+  const [succes, setSucces] = useState("")
   const [categories, setCategories] = useState([]);
   const [selectedCat, setSelectedCat] = useState({
     title: "",
@@ -81,12 +86,12 @@ function PostAd(props) {
     getCategories();
   }, []);
 
-  async function getCategories(){
+  async function getCategories() {
     await axios.get('http://localhost:4000/product/categories')
-    .then((res)=>{
-      setCategories(res.data);
-    })
-    .catch((err) => console.log(err));
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   const onSubmit = (values) => {
@@ -108,13 +113,18 @@ function PostAd(props) {
     }
     values.categoryId = selectedCat._id;
 
-    const userId=JSON.parse(localStorage.getItem("authorization"))
-    console.log(userId)
     axios.post(`http://localhost:4000/product/add/${userId}`, form) // after login add user id in params
-    .then((res) => {
-      // console.log(res);
-    });
+      .then((res) => {
+        setSucces(res.data)
+      });
   };
+
+  function navv() {
+    if (succes === "success") {
+      swal('Product posted successfully!')
+      nav(`/myAds/${userId}`)
+    }
+  }
 
   const [loading, setLoading] = useState(false);
   // setLoading("true");
@@ -122,7 +132,7 @@ function PostAd(props) {
   return !loading === true ? (
     <div
       id="body"
-      className="container p-5 mt-5 border border-primary border-1 rounded-4 mb-4"
+      className="container p-5 mt-5 border border-primary border-1 rounded-4 mb-4 w-75"
     >
       <h2 className="text-center my-4 ">
         POST YOUR AD
@@ -169,7 +179,7 @@ function PostAd(props) {
               )} */}
         <div className="my-5 mx-3">
           <div className="mb-4">
-            <label  className="form-label">
+            <label className="form-label">
               AD TITLE
             </label>
             <input
@@ -238,8 +248,8 @@ function PostAd(props) {
               // name="ableToExchange"
               {...register("ableToExchange")}
               type="checkbox"
-              // id
-              // onChange={handleChange}
+            // id
+            // onChange={handleChange}
             />
             <label
               className="form-check-label fw-bold"
@@ -446,7 +456,7 @@ function PostAd(props) {
                   </div>
                 </div>
                 <div
-                  className="col-4 mx-auto my-auto h-50  rounded-3 pt-3 pb-5"
+                  className="col-4 mx-auto my-auto h-50 rounded-3 pt-3 pb-3"
                   style={{
                     width: "31%",
                     border: errors.color
@@ -468,8 +478,8 @@ function PostAd(props) {
                     </label>
                   )}
                   <div className="container w-100 h-100 pt-4">
-                    <ul className="btn-toggle-nav list-unstyled d-flex gap-5 flex-wrap ps-4">
-                      {colors.map((color,index) => (
+                    <ul className="btn-toggle-nav list-unstyled d-flex gap-3 flex-wrap ps-4">
+                      {colors.map((color, index) => (
                         <li key={index}>
                           <input
                             className="form-check-input rounded-2 border border-1"
@@ -514,23 +524,23 @@ function PostAd(props) {
                 <small style={{ color: "red" }}>{errors.img?.message}</small>
               </div>
               <label className="form-label">
-              Location
-            </label>
-            <input
-              type="text"
-              // name="title"
-              {...register("location", {
-                required: "You must enter location for your product",
-                minLength: { value: 4, message: "Min length of chars is 4" },
-              })}
-              // value={values.title}
-              className="form-control"
-              // onChange={handleChange}
-              // onBlur={handleBlur}
-              style={{
-                borderColor: errors.location ? "red" : "",
-              }}
-            />
+                Location
+              </label>
+              <input
+                type="text"
+                // name="title"
+                {...register("location", {
+                  required: "You must enter location for your product",
+                  minLength: { value: 4, message: "Min length of chars is 4" },
+                })}
+                // value={values.title}
+                className="form-control mb-4"
+                // onChange={handleChange}
+                // onBlur={handleBlur}
+                style={{
+                  borderColor: errors.location ? "red" : "",
+                }}
+              />
               <div className="mb-5">
                 <label htmlFor="description" className="form-label">
                   Description
@@ -561,13 +571,17 @@ function PostAd(props) {
               </div>
             </>
           )}
-          <button
-            type="submit"
-            disabled={selectedCat.title === "" ? true : false}
-            className="btn btn-primary w-100 mb-2 fs-3"
-          >
-            POST AD
-          </button>
+          <div className="text-center">
+            <button
+              type="submit"
+              disabled={selectedCat.title === "" ? true : false}
+              className="btn btn-primary px-5 rounded-5 w-25 fs-5 text-white"
+              onClick={navv}
+              // data-bs-toggle="modal" data-bs-target="#ok"
+            >
+              Post Product
+            </button>
+          </div>
           {selectedCat.title === "" ? (
             <h4 className="text-center" style={{ color: "red" }}>
               Select a category to complete your ad
@@ -575,6 +589,18 @@ function PostAd(props) {
           ) : (
             <></>
           )}
+          {/* {succes === "succes" && <div className="modal fade" id="ok" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-body text-center">
+                  Product posted successfully!
+                </div>
+                <div className="modal-footer justify-content-center">
+                  <button type="button" className="btn btn-outline-primary rounded-5 px-4" data-bs-dismiss="modal" onClick={navv}>Ok</button>
+                </div>
+              </div>
+            </div>
+          </div>} */}
         </div>
       </form>
     </div>

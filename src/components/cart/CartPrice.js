@@ -34,7 +34,7 @@ function CartPrice({data}) {
             values.phoneNumber=usr.phoneNumber
             }
             if(values.address===''){
-            values.address=usr.phoneNumber
+            values.address=usr.address
             }
             axiosInstance.patch(`/user/updateUser/${user}`,values).then((res)=>{
                 nav(`/confirm/${user}`,{state:data})

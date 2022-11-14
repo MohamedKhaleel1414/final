@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@paypal/react-paypal-js": "^7.8.1",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -11,7 +12,8 @@
     "bootstrap": "^5.2.2",
     "formik": "^2.2.9",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.5.0",
+    "react-animated-text-content": "^1.0.1",
+    "react-bootstrap": "^2.6.0",
     "react-card-slider-component": "^1.0.9",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.1",
@@ -22,6 +24,7 @@
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },

@@ -29,6 +29,7 @@ function Slider_section() {
   },[])
   return (
     <>
+    <h2 className="fs-1 fw-bold text-center my-4"><span className="text-primary">Explore</span> Products</h2>
     <div className='container'>
     <ReactCardSlider slides={slides.slice(0,8)}/>
     </div>

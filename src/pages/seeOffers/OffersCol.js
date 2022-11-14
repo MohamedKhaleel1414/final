@@ -4,10 +4,51 @@ import { axiosInstance } from "../../../config/axios";
 import "./ProductCard.css";
 
 function ProductCard(props) {
+  // const [product, setProduct] = useState({
+  //   data: {
+  //     ableToExchange: false,
+  //     brand: "",
+  //     categoryId: "",
+  //     color: "",
+  //     description: "",
+  //     durationOfUse: "",
+  //     firstFilter: "",
+  //     img: [],
+  //     price: 0,
+  //     secondFilter: "",
+  //     status: "pending",
+  //     thirdFilter: "",
+  //     time: "",
+  //     title: "",
+  //     userId: "",
+  //     _id: "",
+  //   },
+  //   category: {
+  //     firstFilter: {},
+  //     secondFilter: {},
+  //     thirdFilter: {},
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   getProduct();
+  // }, []);
+
+  // async function getProduct() {
+  //   await axiosInstance
+  //     .get(`product/getProduct/${props.productId}`)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setProduct(res.data);
+
+  //       // console.log(product.data.title)
+  //     })
+  //     .catch((err) => console.log("Error"));
+  // }
 
   return (
-    <div className="d-flex justify-content-evenly row gap-5">
-      <div className="col-5">
+    <div className="row gap-5">
+      <div className="col">
         <h3 className="mb-3">Wanted Product</h3>
         <article className="card mx-0 w-100">
           <div className="row">
@@ -77,7 +118,7 @@ function ProductCard(props) {
         </article>
       </div>
 
-      <div className="col-5">
+      <div className="col">
         <h3 className="mb-3">Offered Product</h3>
         <article className="card mx-0 w-100">
           <div className="row">
@@ -103,7 +144,7 @@ function ProductCard(props) {
           <div className="container text-capitalize">
             <div className="row mb-2 bg-light">
               <div className="col-6 border-start border-5 border-primary">
-                {props.offeredproductdata.categoryId === "6363b2908a17142dd3e7e8a6" && "Country"} {props.offeredproductdata.categoryId !== "6363b2908a17142dd3e7e8a6" && "Brand"}
+                {props.wantedproductdata.categoryId === "6363b2908a17142dd3e7e8a6" && "Country"} {props.wantedproductdata.categoryId !== "6363b2908a17142dd3e7e8a6" && "Brand"}
               </div>
               <div className="col">{props.offeredproductdata.brand}</div>
             </div>

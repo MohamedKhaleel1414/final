@@ -2,29 +2,38 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import swal from 'sweetalert';
 import { axiosInstance } from '../../config/axios';
 import { removeFromCartAction } from '../../Redux/Actions/addToCartAction';
 import { store } from '../../Redux/Store'
+// import {useNavigate} from 'react-router-dom';
 
-function CartContent(props) {
 
+function CartContent({old,data}) {
+    // const nav = useNavigate();
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem("authorization"))
-    const [datas, setDate] = useState(props.data);
+    const [datas, setDate] = useState(data);
+    const [crt,setCrt] = useState([])
+
+   useEffect(()=>{
+    console.log(old)
+   },[old])
 
     store.subscribe(() => {
         setDate([...store.getState().cart]);
     });
 
     function Removedb(id) {
-        axiosInstance.post(`/user/rmovefromcart/${user}/${id}`).then((res) => { })
+        axiosInstance.delete(`/user/rmovefromcart/${user}/${id}`).then((res) => {
+            old = old.filter((item)=> {
+                return item._id !==id
+            })
+            swal("This Item has been deleted!")
+        })
     }
 
-    // function Remove(id){
-    //     const idx = datas.findIndex((x)=>x._id===id);
-    //     dispatch(removeFromCartAction(idx));
-    // }
-
+    
     return (
         <>
             <div className="col-9 ps-1 mb-5">
@@ -46,9 +55,9 @@ function CartContent(props) {
                     </div>
                     })} */}
 
-                    {props.old.length !== 0 ?
+                    {old.length !== 0 ?
                         <>
-                            {props.old.map((item, index) => {
+                            {old.map((item, index) => {
                                 return <div className="border rounded-3 p-4 mb-3 shadow-sm" key={index}>
                                     <div className="info d-flex justify-content-start">
                                         <img src={'http://localhost:4000/' + item.img[0]} alt={1} style={{ width: '10rem' }} />
@@ -59,12 +68,20 @@ function CartContent(props) {
                                         </div>
                                     </div>
                                     <div className="actions d-flex justify-content-end">
-                                        <button className="btn btn-outline-danger rounded-5 px-4" onClick={() => Removedb(item._id)} data-bs-toggle="modal" data-bs-target="#exampleModal1">Remove from list</button>
+                                        <button className="btn btn-outline-danger rounded-5 px-4" onClick={() => Removedb(item._id)} 
+                                        // data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                        >Remove from list</button>
                                     </div>
                                 </div>
                             })}
-                        </> : "Your cart is Empty"}
-                    <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </> : <>
+                            <div className='d-flex flex-column justify-content-end mt-5 pt-5 align-items-center'>
+                                <i className="fa-solid fa-cart-shopping text-secondary" style={{fontSize:"75px"}}></i>
+                                <p className='mt-5 fs-4 text-dark fw-bold'>Your cart is Empty!</p>
+                                <p className='mt-1 text-dark fw-bold'>Go back and add some products</p>
+                            </div>
+                        </>}
+                    {/* <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
                                 <div className="modal-body text-center">
@@ -75,7 +92,7 @@ function CartContent(props) {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

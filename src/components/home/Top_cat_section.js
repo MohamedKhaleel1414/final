@@ -14,7 +14,7 @@ function Top_cat_section() {
                   <img src={Mobile} alt="" className="w-100 " />
                 </div>
                 <h2 className="text-center text-primary my-4">Mobile &amp; Tablet</h2>
-                <a className="btn btn-primary w-50  text-light rounded-4 my-4">Explor  <i className="fa-solid fa-arrow-right" /></a>
+                <a className="btn btn-primary w-50  text-light rounded-4 my-4">Explore  <i className="fa-solid fa-arrow-right" /></a>
               </div>
             </div>
             <div className="col">
@@ -23,7 +23,7 @@ function Top_cat_section() {
                   <img src={PC} alt="" className="w-100 " />
                 </div>
                 <h2 className="text-center text-primary my-4">PC &amp; Laptop</h2>
-                <button className="btn btn-primary w-50  text-light rounded-4 my-4">Explor  <i className="fa-solid fa-arrow-right" /></button>
+                <button className="btn btn-primary w-50  text-light rounded-4 my-4">Explore  <i className="fa-solid fa-arrow-right" /></button>
               </div>
             </div>
             <div className="col">
@@ -32,7 +32,7 @@ function Top_cat_section() {
                   <img src={consolegame} alt="" className="w-100 " />
                 </div>
                 <h2 className="text-center text-primary my-4">Console games</h2>
-                <button className="btn btn-primary w-50  text-light rounded-4 my-4">Explor  <i className="fa-solid fa-arrow-right" /></button>
+                <button className="btn btn-primary w-50  text-light rounded-4 my-4">Explore  <i className="fa-solid fa-arrow-right" /></button>
               </div>
             </div>
           </div>

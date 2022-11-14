@@ -12,22 +12,22 @@ function SearchedContent() {
 
   return (
     <>
-        <div className="col-9 ps-1 mb-5">
-                <div className="d-flex flex-column ps-5 w-100">
+        <div className="col-lg-10 col-md-12 mt-2">
+                <div className="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-3 px-lg-5 px-md-2 py-2">
                     {x.map((item,index)=>{
-                        return <div className="border rounded-3 p-4 mb-3 shadow-sm" key={index}>
-                        <div className="info d-flex justify-content-start">
-                            <img src={'http://localhost:4000/'+item.img[0]}  alt={1} style={{ width: '10rem' }} />
-                            <div className="ps-3">
-                                <p className="pt-2 fw-bold" style={{ fontSize: '25px' }} >{item.title}</p>
-                                <p className="fw-semibold mb-1" style={{ fontSize: '17px' }} >Storage: {item.secondFilter} - RAM Size: {item.firstFilter} - Color: {item.color}</p>
-                                <p className="fw-semibold mb-1" style={{ fontSize: '17px' }} >Price: {item.price} EGY</p>
+                        return <div className="col" key={index}>
+                        <div className="card_Products border border-1">
+                            <div className="img py-2" key={index}>
+                                <img src={'http://localhost:4000/' + item.img[0]} alt="..." width="90%"/>
                             </div>
+                            <div className="p-2">
+                                <p className="m-0  text-primary fw-semibold fs-5"> {item.title}</p>
+                                <p className="px-2 m-0">{item.durationOfUse}</p>
+                                <p className="m-0  text-primary fw-semibold fs-5 px-1">EGY {item.price}</p>
+                            </div>
+                            <input type="button" defaultValue="View Details" className="btn btn-primary text-light w-100 rounded-0" onClick={() => productDetails(item)} />
                         </div>
-                        <div className="actions d-flex justify-content-end">
-                            <button className="btn btn-outline-primary rounded-5 px-4" onClick={() => productDetails(item)}>View Details</button>
-                        </div>
-                    </div>
+                </div>
                     })}
                 </div>
             </div>

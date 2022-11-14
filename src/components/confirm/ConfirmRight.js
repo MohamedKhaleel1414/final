@@ -1,12 +1,50 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {useLocation,useNavigate} from 'react-router-dom'
+import axios from 'axios';
+import swal from 'sweetalert';
 
 function ConfirmRight() {
     const loc = useLocation().state
     const nav = useNavigate()
-    function finish(){
+    const [usr, setUsr] = useState("")
+    const [sellers, setSellers] = useState([])
+    const [cartitem, setCartitems] = useState([])
+    const user = JSON.parse(localStorage.getItem("authorization"))
+
+    useEffect(() => {
+        axios.get(`http://localhost:4000/user/getUser/${user}`).then((res) => {
+            setUsr(res.data.address)
+        })
+        axios.get(`http://localhost:4000/order/sellersfromcart/${user}`).then((res) => {
+            setSellers(res.data)
+        })
+        axios.get(`http://localhost:4000/user/cartitemsid/${user}`).then((res) => {
+            setCartitems(res.data)
+        })
+    }, [])
+
+    const orderData = {
+        "buyerId": user,
+        "sellerId": sellers,
+        "cart": cartitem,
+        "orderPrice": loc,
+        "profit": loc / 20,
+        "shipping": 100,
+        "address": usr,
+        "paymentmethod": "COD",
+    }
+
+    function createOrder(){
+        axios.post(`http://localhost:4000/order/createorder/${user}`,orderData).then((res) => {
+            console.log(res.data)
+        })
+        swal("Thank you for shopping")
         nav("/home")
     }
+
+    // function finish(){
+    //     nav("/home")
+    // }
     return (
         <>
             <aside className=" bg-white p-5 border border-secondary border-opacity-50 rounded-5">
@@ -28,10 +66,12 @@ function ConfirmRight() {
                     <p className="pt-1 fs-5">{loc+100} EG</p>
                 </div>
                 <div>
-                    <button className="doprocess btn btn btn-outline-primary w-100 mt-4 mb-4 rounded-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style={{ fontSize: '13px', fontWeight: 600 }}>Place Order</button>
+                    <button className="doprocess btn btn btn-outline-primary w-100 mt-4 mb-4 rounded-5" 
+                    // data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                     style={{ fontSize: '13px', fontWeight: 600 }} onClick={createOrder}>Place Order</button>
                 </div>
-                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog">
+                {/* <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-body text-center">
                                 <p>Thank you for shopping</p>
@@ -41,7 +81,7 @@ function ConfirmRight() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </aside>
         </>
     );

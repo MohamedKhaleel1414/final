@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { axiosInstance } from "../config/axios";
-import Side from '../components/Side'
+import Side from '../components/Side';
+import swal from "sweetalert";
 // import "./MyInfo.css";
 
 function MyInfo() {
@@ -51,6 +52,7 @@ function MyInfo() {
       .finally(() => {
         setIsLoading(false);
       });
+      swal("Profile Updated!")
   }
 
   useEffect(() => {

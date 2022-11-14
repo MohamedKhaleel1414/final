@@ -5,9 +5,9 @@ import SearchedContent from './SearchedContent'
 function SearchedItems() {
   return (
     <>
-        <div className="main row  mt-3 me-5" style={{overflow:'hidden'}}>
-            <Side></Side>
-            <SearchedContent></SearchedContent>
+        <div className="container mt-4" style={{overflow:'hidden'}}>
+          <h3 className="mb-3">Searched Items</h3>
+          <SearchedContent></SearchedContent>
         </div>
     </>
   )

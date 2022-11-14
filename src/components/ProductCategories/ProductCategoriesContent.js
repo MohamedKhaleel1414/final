@@ -31,7 +31,7 @@ function ProductCategoriesContent({ data }) {
 
     return (
         <>
-            <div className="col-lg-10 col-md-12 mt-2">
+            <div className="col-lg-10 col-md-12 mt-">
                 <div className="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-3 px-lg-5 px-md-2 py-2">
                     {currentItems.map((item, index) => {
                         return <div className="col" key={index}>

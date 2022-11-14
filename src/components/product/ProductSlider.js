@@ -12,8 +12,8 @@ function ProductSlider() {
         nav("/product", { state: data })
     }
     useEffect(() => {
-        axios.get(`http://localhost:4000/product/products/${brandPro._id}`).then((res) => {
-            // console.log(res.data)
+        axios.get(`http://localhost:4000/product/productsbrand/${brandPro.brand}`).then((res) => {
+            console.log(brandPro.brand)
             const arr = []
             for (let i = 0; i < res.data.length; i++) {
                 var url = `http://localhost:4000/${res.data[i].img[1]}`;
@@ -34,6 +34,7 @@ function ProductSlider() {
 
     return (
         <>
+            <h2 className="fs-1 fw-bold text-center my-4"><span className="text-primary">Similar</span> Products</h2>
             <div className='container'>
                 <ReactCardSlider slides={slides} />
             </div>
